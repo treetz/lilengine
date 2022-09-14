@@ -74,4 +74,15 @@ namespace lilengine {
 			std::this_thread::sleep_for(wait_time);
 		}
 	}
+
+	/* 
+	 * Ask how to return a reference to the GraphicsManager or InputManager
+	 */
+	GraphicsManager& Engine::GetGraphicsManager() {
+		return impl_->graphics&;
+	}
+
+	InputManager& Engine::GetInputManager() {
+		return impl_->input&;
+	}
 }

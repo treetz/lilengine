@@ -16,11 +16,13 @@ namespace lilengine {
 		void Startup();
 		void Shutdown();
 		void RunGameLoop(const UpdateCallback& callback);
+		GraphicsManager& GetGraphicsManager();
+		InputManager& GetInputManager();
 
 	private:
 		class EngineImpl;
 		std::unique_ptr< EngineImpl > impl_;
 	};
 
-	inline Engine gEngine = Engine();
+	inline Engine gEngine;
 }
