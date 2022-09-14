@@ -6,8 +6,17 @@
 
 namespace lilengine {
 	using namespace Types;
+	
+	/* Need to foward declare these classes so the getter methods know the
+	 * class exists and can be returned.
+	 */
+	class GraphicsManager;
+	class InputManager;
 
 	class Engine {
+
+		typedef std::function<void(Engine& e)> UpdateCallback;
+
 	public:
 		Engine(int window_width = 100, int window_height = 100, 
 			bool fullscreen = false);

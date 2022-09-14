@@ -52,20 +52,20 @@ namespace lilengine {
 		while (true) {
 			const auto t1 = std::chrono::steady_clock::now();
 
-			/* Timestep testing
+			/* Timestep testing 
 			if (std::chrono::duration<double>(t1 - t0).count() >= 1) {
 				spdlog::info("Game Loop is Finished!");
 				break;
-			}			
-			std::cout << "Tick: " << tick_num << "\n";
-			tick++;
+			}	
+			spdlog::info("Tick: {}", tick_num);
+			tick_num++;
 			*/
 
 			impl_->input.Update();
 
-			callback();
+			callback(*this);
 
-			//graphics.Draw();
+			impl_->graphics.Draw();
 
 			// Manage timestep
 			const auto t2 = std::chrono::steady_clock::now();
@@ -75,14 +75,11 @@ namespace lilengine {
 		}
 	}
 
-	/* 
-	 * Ask how to return a reference to the GraphicsManager or InputManager
-	 */
 	GraphicsManager& Engine::GetGraphicsManager() {
-		return impl_->graphics&;
+		return impl_->graphics;
 	}
 
 	InputManager& Engine::GetInputManager() {
-		return impl_->input&;
+		return impl_->input;
 	}
 }

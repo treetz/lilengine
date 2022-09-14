@@ -1,9 +1,13 @@
 #pragma once
 
+#define GLFW_INCLUDE_NONE
+#include "GLFW/glfw3.h"
+
 #include "spdlog/spdlog.h"
 
 #include "Engine.h"
 #include "InputManager.h"
+#include "GraphicsManager.h"
 
 namespace lilengine {
 
@@ -27,12 +31,11 @@ namespace lilengine {
 		glfwPollEvents();
 	}
 
-	bool InputManager::KeyIsPressed(int key) {
-		/*
-		if (glfwGetKey(gEngine.impl_->graphics.window, key) == GLFW_PRESS) {
+	bool InputManager::KeyIsPressed(int GLFW_key) {
+		if (glfwGetKey(gEngine.GetGraphicsManager().window, GLFW_key) == GLFW_PRESS) {
+			spdlog::info("Key {} was pressed!", GLFW_key);
 			return true;
 		}
-		*/
 		return false;
 	}
 }

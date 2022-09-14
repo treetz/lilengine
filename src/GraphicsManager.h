@@ -25,21 +25,4 @@ namespace lilengine {
 		bool window_fullscreen;
 		GLFWwindow* window;
 	};
-
-	/* pimpl Implementation
-	class GraphicsManager {
-	public:
-		GraphicsManager(int window_width = 100, int window_height = 100, 
-			bool window_fullscreen = false);
-		~GraphicsManager();
-
-		void Startup();
-		void Shutdown();
-		void Draw();
-
-	private:
-		class GraphicsManagerImpl;
-		std::unique_ptr< GraphicsManagerImpl > impl_;
-	};
-	*/
 }
