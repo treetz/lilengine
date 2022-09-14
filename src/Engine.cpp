@@ -1,51 +1,69 @@
 #include <thread>
 #include <chrono>
-
 #include <iostream>
 
+#include "spdlog/spdlog.h"
+
 #include "Engine.h"
+#include "GraphicsManager.h"
+#include "InputManager.h"
 
 namespace lilengine {
 
+	class Engine::EngineImpl {
+	public:
+		GraphicsManager graphics;
+		InputManager input;
+	};
+
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
-		graphics = GraphicsManager(window_width, window_height, fullscreen);
+		impl_ = std::make_unique< EngineImpl >();
+
+		/* Ask about error that occurs when initializing graphics with 
+		 * pimpl implementaion for the GraphicsManager
+		 */
+		impl_->graphics = GraphicsManager(window_width, window_height, fullscreen);
+		impl_->input = InputManager();
+	}
+
+	Engine::~Engine() {
+
 	}
 
 	void Engine::Startup() {
-		graphics.Startup();
-		//input.Startup();
+		impl_->graphics.Startup();
+		impl_->input.Startup();
 	}
 
 	void Engine::Shutdown() {
-		//input.Shutdown();
-		graphics.Shutdown();
+		impl_->input.Shutdown();
+		impl_->graphics.Shutdown();
 	}
 
-	void Engine::RunGameLoop(/*UpdateCallack*/) {
-		using namespace Types;
-
+	void Engine::RunGameLoop(const UpdateCallback& callback) {
 		const auto one_sixtieth_of_a_second = std::chrono::duration<real>(1. / 60.);
 
-		//const auto start = std::chrono::steady_clock::now();
-
-		int n = 1;
+		/* Timestep Testing 
+		const auto t0 = std::chrono::steady_clock::now();
+		spdlog::info("Starting Game Loop!");
+		int tick_num = 1;
+		*/
 
 		while (true) {
 			const auto t1 = std::chrono::steady_clock::now();
 
-			/*
-			std::chrono::duration<double> total_time = t1 - start;
-			if (total_time.count() >= 1) {
+			/* Timestep testing
+			if (std::chrono::duration<double>(t1 - t0).count() >= 1) {
+				spdlog::info("Game Loop is Finished!");
 				break;
-			}
-			
-			std::cout << "You are in tick " << n << "\n";
-			n += 1;
+			}			
+			std::cout << "Tick: " << tick_num << "\n";
+			tick++;
 			*/
 
-			//input.Update();
+			impl_->input.Update();
 
-			//UpdateCallback();
+			callback();
 
 			//graphics.Draw();
 

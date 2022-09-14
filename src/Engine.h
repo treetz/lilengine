@@ -1,20 +1,26 @@
 #pragma once
 
+#include <memory>
+
 #include "Types.h"
-#include "GraphicsManager.h"
 
 namespace lilengine {
+	using namespace Types;
 
 	class Engine {
 	public:
-		GraphicsManager graphics;
-		//InputManager input;
+		Engine(int window_width = 100, int window_height = 100, 
+			bool fullscreen = false);
+		~Engine();
 
-		Engine(int window_width = 100, int window_height = 100, bool fullscreen = false);
 		void Startup();
 		void Shutdown();
-		void RunGameLoop(/*UpdateCallback*/);
+		void RunGameLoop(const UpdateCallback& callback);
+
+	private:
+		class EngineImpl;
+		std::unique_ptr< EngineImpl > impl_;
 	};
 
-	inline Engine gEngine;
+	inline Engine gEngine = Engine();
 }

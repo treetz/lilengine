@@ -1,5 +1,6 @@
 add_rules("mode.debug", "mode.release")
 add_requires("glfw")
+add_requires("spdlog")
 
 set_policy("build.warning", true) -- show warnings
 set_warnings("all") -- warn about many things
@@ -23,4 +24,5 @@ target("lilengine")
     -- Add all .cpp files in the `src` directory.
     add_files("src/*.cpp")
 
-	add_packages("glfw")
+	add_packages("glfw", {public = true})
+	add_packages("spdlog")
