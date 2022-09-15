@@ -12,6 +12,8 @@ namespace lilengine {
 	 */
 	class GraphicsManager;
 	class InputManager;
+	class ResourceManager;
+	class SoundManager;
 
 	class Engine {
 
@@ -27,6 +29,8 @@ namespace lilengine {
 		void RunGameLoop(const UpdateCallback& callback);
 		GraphicsManager& GetGraphicsManager();
 		InputManager& GetInputManager();
+		ResourceManager& GetResourceManager();
+		SoundManager& GetSoundManager();
 
 	private:
 		class EngineImpl;

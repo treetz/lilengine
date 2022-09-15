@@ -3,7 +3,8 @@
 #define GLFW_INCLUDE_NONE
 #include "GLFW/glfw3.h"
 
-//#include <memory>
+#include "Types.h"
+#include "Engine.h"
 
 namespace lilengine {
 
@@ -18,6 +19,8 @@ namespace lilengine {
 		void Startup();
 		void Shutdown();
 		void Draw();
+		bool ShouldQuit();
+		void SetShouldQuit();
 
 	private:
 		int window_width;

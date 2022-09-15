@@ -1,6 +1,8 @@
 add_rules("mode.debug", "mode.release")
 add_requires("glfw")
 add_requires("spdlog")
+includes("external/xmake_soloud.lua")
+add_requires("soloud")
 
 set_policy("build.warning", true) -- show warnings
 set_warnings("all") -- warn about many things
@@ -12,6 +14,12 @@ target("helloworld")
 	add_deps("lilengine")
     
     add_files("demo/helloworld.cpp")
+
+	-- Copy assets
+    after_build(function (target)
+        cprint("Copying assets")
+        os.cp("$(projectdir)/assets", path.directory(target:targetfile()))
+    end)
 
 target("lilengine")
     set_kind("static")
@@ -26,3 +34,4 @@ target("lilengine")
 
 	add_packages("glfw", {public = true})
 	add_packages("spdlog")
+	add_packages("soloud", {public = true})

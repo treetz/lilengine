@@ -3,6 +3,9 @@
 #define GLFW_INCLUDE_NONE
 #include "GLFW/glfw3.h"
 
+#include "Engine.h"
+#include "GraphicsManager.h"
+
 namespace lilengine {
 
 	class InputManager {

@@ -1,12 +1,7 @@
 #pragma once
 
-#define GLFW_INCLUDE_NONE
-#include "GLFW/glfw3.h"
-
-#include "Types.h"
 #include "spdlog/spdlog.h"
 
-#include "Engine.h"
 #include "GraphicsManager.h"
 
 namespace lilengine {
@@ -46,5 +41,16 @@ namespace lilengine {
 
 	void GraphicsManager::Draw() {
 
+	}
+
+	bool GraphicsManager::ShouldQuit() {
+		if (glfwWindowShouldClose(this->window) == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	void GraphicsManager::SetShouldQuit() {
+		glfwSetWindowShouldClose(this->window, true);
 	}
 }

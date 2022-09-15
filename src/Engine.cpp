@@ -1,3 +1,5 @@
+#pragma once
+
 #include <thread>
 #include <chrono>
 #include <iostream>
@@ -7,6 +9,8 @@
 #include "Engine.h"
 #include "GraphicsManager.h"
 #include "InputManager.h"
+#include "ResourceManager.h"
+#include "SoundManager.h"
 
 namespace lilengine {
 
@@ -14,16 +18,13 @@ namespace lilengine {
 	public:
 		GraphicsManager graphics;
 		InputManager input;
+		ResourceManager resources;
+		SoundManager sound;
 	};
 
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
 		impl_ = std::make_unique< EngineImpl >();
-
-		/* Ask about error that occurs when initializing graphics with 
-		 * pimpl implementaion for the GraphicsManager
-		 */
 		impl_->graphics = GraphicsManager(window_width, window_height, fullscreen);
-		impl_->input = InputManager();
 	}
 
 	Engine::~Engine() {
@@ -63,6 +64,10 @@ namespace lilengine {
 
 			impl_->input.Update();
 
+			if (impl_->graphics.ShouldQuit() == true) {
+				break;
+			}
+
 			callback(*this);
 
 			impl_->graphics.Draw();
@@ -81,5 +86,13 @@ namespace lilengine {
 
 	InputManager& Engine::GetInputManager() {
 		return impl_->input;
+	}
+
+	ResourceManager& Engine::GetResourceManager() {
+		return impl_->resources;
+	}
+
+	SoundManager& Engine::GetSoundManager() {
+		return impl_->sound;
 	}
 }
