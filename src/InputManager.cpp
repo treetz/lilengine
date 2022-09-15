@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "spdlog/spdlog.h"
 #include "InputManager.h"
 
@@ -26,7 +28,8 @@ namespace lilengine {
 	}
 
 	bool InputManager::KeyIsPressed(int GLFW_key) {
-		if (glfwGetKey(gEngine.GetGraphicsManager().window, GLFW_key) == GLFW_PRESS) {
+		GLFWwindow* w = gEngine.GetGraphicsManager().window;
+		if (glfwGetKey(w, GLFW_key) == GLFW_PRESS) {
 			spdlog::info("Key {} was pressed!", GLFW_key);
 			return true;
 		}
