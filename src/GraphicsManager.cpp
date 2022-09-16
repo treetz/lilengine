@@ -23,15 +23,15 @@ namespace lilengine {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		this->window = glfwCreateWindow(window_width, window_height, "lilengine", window_fullscreen ? glfwGetPrimaryMonitor() : 0, 0);
-		glfwSetWindowAspectRatio(this->window, window_width, window_height);
-		if (!this->window)
+		window = glfwCreateWindow(window_width, window_height, "lilengine", window_fullscreen ? glfwGetPrimaryMonitor() : 0, 0);
+		glfwSetWindowAspectRatio(window, window_width, window_height);
+		if (!window)
 		{
 
 			spdlog::error("Failed to create a window.");
 			glfwTerminate();
 		}
-		glfwMakeContextCurrent(this->window);
+		glfwMakeContextCurrent(window);
 		glfwSwapInterval(1);
 	}
 
@@ -44,13 +44,13 @@ namespace lilengine {
 	}
 
 	bool GraphicsManager::ShouldQuit() {
-		if (glfwWindowShouldClose(this->window) == 1) {
+		if (glfwWindowShouldClose(window) == 1) {
 			return true;
 		}
 		return false;
 	}
 
 	void GraphicsManager::SetShouldQuit() {
-		glfwSetWindowShouldClose(this->window, true);
+		glfwSetWindowShouldClose(window, true);
 	}
 }

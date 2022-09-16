@@ -5,7 +5,7 @@
 namespace lilengine {
 	
 	path ResourceManager::ResolvePath(path p) {		
-		const path root{ "assets" };
+		const path root{ ".\\assets" };
 		return root / p;
 	}
 }

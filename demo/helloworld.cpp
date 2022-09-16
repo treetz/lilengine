@@ -24,6 +24,7 @@ void PlayASound(Engine& e) {
 	if (e.GetInputManager().GetKeyStatus(GLFW_KEY_SPACE) == GLFW_PRESS && pressed == false) {
 		pressed = true;
 		std::cout << "The Spacebar has been pressed!\n";
+		e.GetSoundManager().PlaySound("bubbles");
 	}
 	if (e.GetInputManager().GetKeyStatus(GLFW_KEY_SPACE) == GLFW_RELEASE && pressed == true) {
 		pressed = false;
@@ -34,7 +35,7 @@ int main(int argc, const char* argv[]) {
 	Engine e;
 	e.Startup();
 
-	//e.GetSoundManager().LoadSound("bubbles", "sounds/bubbles.wav");
+	e.GetSoundManager().LoadSound("bubbles", "sounds\\bubbles.wav");
 
 	/* You can call RunGameLoop() with an empty lambda function if you don't
 	 * want a callback function to be called:

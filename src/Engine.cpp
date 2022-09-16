@@ -38,6 +38,7 @@ namespace lilengine {
 	}
 
 	void Engine::Shutdown() {
+		gEngine.impl_->sound.Shutdown();
 		gEngine.impl_->input.Shutdown();
 		gEngine.impl_->graphics.Shutdown();
 	}
