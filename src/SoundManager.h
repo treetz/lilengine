@@ -1,5 +1,7 @@
 #pragma once
 
+#include <unordered_map>
+
 #include "Types.h"
 #include "Engine.h"
 #include "ResourceManager.h"

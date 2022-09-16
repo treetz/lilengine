@@ -1,6 +1,6 @@
 #pragma once
 
-#include "spdlog/spdlog.h"
+#include <iostream>
 #include "SoundManager.h"
 
 namespace lilengine {
@@ -23,7 +23,6 @@ namespace lilengine {
 
 	bool SoundManager::LoadSound(const string& name, const string& p) {
 		path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
-		spdlog::info("resolved_path: {}", p.c_str());
 
 		/* Ask about error */
 		//this->name_to_sound_map[name].load(resolved_path.c_str());

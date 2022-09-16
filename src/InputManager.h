@@ -17,5 +17,6 @@ namespace lilengine {
 		void Shutdown();
 		void Update();
 		bool KeyIsPressed(int key);
+		int GetKeyStatus(int key);
 	};
 }

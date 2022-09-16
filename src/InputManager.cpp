@@ -28,11 +28,15 @@ namespace lilengine {
 	}
 
 	bool InputManager::KeyIsPressed(int GLFW_key) {
-		GLFWwindow* w = gEngine.GetGraphicsManager().window;
-		if (glfwGetKey(w, GLFW_key) == GLFW_PRESS) {
-			spdlog::info("Key {} was pressed!", GLFW_key);
+		if (glfwGetKey(gEngine.GetGraphicsManager().window, GLFW_key) == GLFW_PRESS) {
 			return true;
 		}
-		return false;
+		else {
+			return false;
+		}
+	}
+
+	int InputManager::GetKeyStatus(int GLFW_key) {
+		return glfwGetKey(gEngine.GetGraphicsManager().window, GLFW_key);
 	}
 }
