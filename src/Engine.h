@@ -20,7 +20,7 @@ namespace lilengine {
 		typedef std::function<void(Engine& e)> UpdateCallback;
 
 	public:
-		Engine(int window_width = 100, int window_height = 100, 
+		Engine(int window_width = 100/*1600*/, int window_height = 100/*900*/,
 			bool fullscreen = false);
 		~Engine();
 

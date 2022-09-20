@@ -1,8 +1,12 @@
 #pragma once
 
-#include "spdlog/spdlog.h"
+#define SOKOL_IMPL
+#define SOKOL_GLCORE33
+#include "sokol_gfx.h"
 
 #include "GraphicsManager.h"
+
+#include "spdlog/spdlog.h"
 
 namespace lilengine {
 
@@ -17,6 +21,7 @@ namespace lilengine {
 	}
 
 	void GraphicsManager::Startup() {
+		// Window Setup
 		glfwInit();
 		// We'll use sokol_gfx's OpenGL backend
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -33,9 +38,36 @@ namespace lilengine {
 		}
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(1);
+
+		// Image Drawing Setup
+		sg_setup(sg_desc{});
+
+		// A vertex buffer containing a textured square.
+		const float vertices[] = {
+			// positions      // texcoords
+			-1.0f,  -1.0f,    0.0f,  0.0f,
+			 1.0f,  -1.0f,    1.0f,  0.0f,
+			-1.0f,   1.0f,    0.0f,  1.0f,
+			 1.0f,   1.0f,    1.0f,  1.0f,
+		};
+
+		sg_buffer_desc buffer_desc{};
+		buffer_desc.data = SG_RANGE(vertices);
+
+		sg_buffer vertex_buffer = sg_make_buffer(buffer_desc);
+
+		sg_pipeline_desc pipeline_desc{};
+
+		pipeline_desc.primitive_type = SG_PRIMITIVETYPE_TRIANGLE_STRIP;
+		
+		// Alpha Blending
+		pipeline_desc.colors[0].blend.enabled = true;
+		pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+		pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
 	}
 
 	void GraphicsManager::Shutdown() {
+		sg_shutdown();
 		glfwTerminate();
 	}
 

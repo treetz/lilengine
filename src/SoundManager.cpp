@@ -24,18 +24,21 @@ namespace lilengine {
 	bool SoundManager::LoadSound(const string& name, const string& p) {
 		std::cout << "Hello from LoadSound()\nLoading: " << name << "\n";
 
-		path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
-
-		sample.load(resolved_path.string().c_str());
-
-		std::cout << "Life is great!" << "\n";
-		//name_to_sound_map[name] = sample;
-		
 		//if (name_to_sound_map.count(name) != 0) {
+			path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
 
-			/* Ask about error */
+			std::cout << "resolved path: " << resolved_path;
 
-			//name_to_sound_map[name].load(resolved_path.string().c_str());
+			//SoLoud::Wav sample;    // One sample
+
+			//sample.load(resolved_path.string().c_str()); // Load a wave file
+			//soloud.play(sample);        // Play it
+
+			/* Ask about error that causes the executable to crash. I 
+			 * believe it has to due with SoLoud::Wav showing up as an
+			 * error-type. Error occurs when 
+			 */
+			name_to_sound_map[name].load(resolved_path.string().c_str());
 
 		//}
 		return true;
@@ -47,7 +50,7 @@ namespace lilengine {
 	}
 
 	bool SoundManager::PlaySound(const string& name) {
-		soloud.play(sample);//name_to_sound_map[name]);
+		soloud.play(name_to_sound_map[name]);
 		return true;
 	}
 }

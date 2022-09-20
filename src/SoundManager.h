@@ -16,8 +16,6 @@ namespace lilengine {
 		SoLoud::Soloud soloud;
 		std::unordered_map< string, SoLoud::Wav > name_to_sound_map;
 
-		SoLoud::Wav sample;
-
 		SoundManager();
 		~SoundManager();
 
