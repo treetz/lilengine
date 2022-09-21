@@ -22,6 +22,20 @@ target("helloworld")
         os.cp("$(projectdir)/assets", path.directory(target:targetfile()))
     end)
 
+target("little")
+    set_kind("binary")
+    set_languages("cxx17")
+
+	add_deps("lilengine")
+    
+    add_files("demo/little.cpp")
+
+	-- Copy assets
+    after_build(function (target)
+        cprint("Copying assets")
+        os.cp("$(projectdir)/assets", path.directory(target:targetfile()))
+    end)
+
 target("lilengine")
     set_kind("static")
     set_languages("cxx17")

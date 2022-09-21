@@ -35,7 +35,22 @@ int main(int argc, const char* argv[]) {
 	Engine e;
 	e.Startup();
 
-	e.GetSoundManager().LoadSound("bubbles", "bubbles.wav");
+	e.GetSoundManager().LoadSound("cheer", "cheer.wav");
+
+	/*
+	SoLoud::Soloud gSoloud;
+	SoLoud::Wav gWave;
+
+	gSoloud.init();
+
+	int code = gWave.load("cheer.wav");
+
+    std::cout << code << "\n";
+
+	gSoloud.play(gWave);
+
+	gSoloud.deinit();
+	*/
 
 	/* You can call RunGameLoop() with an empty lambda function if you don't
 	 * want a callback function to be called:
