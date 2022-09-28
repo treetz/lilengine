@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 
 #include "Types.h"
 
@@ -20,7 +21,7 @@ namespace lilengine {
 		typedef std::function<void(Engine& e)> UpdateCallback;
 
 	public:
-		Engine(int window_width = 100/*1600*/, int window_height = 100/*900*/,
+		Engine(int window_width = 800, int window_height = 450,
 			bool fullscreen = false);
 		~Engine();
 

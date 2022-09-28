@@ -5,7 +5,10 @@
 namespace lilengine {
 	
 	path ResourceManager::ResolvePath(path p) {		
-		const path root{ "assets/sounds" };
 		return root / p;
+	}
+
+	void ResourceManager::SetRootPath(path p) {
+		root = p;
 	}
 }

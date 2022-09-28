@@ -9,6 +9,9 @@ namespace lilengine {
 
 	class ResourceManager {
 	public:
+		path root = "assets";
+
 		path ResolvePath(path p);
+		void SetRootPath(path p);
 	};
 }

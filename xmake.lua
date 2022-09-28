@@ -4,6 +4,8 @@ add_requires("spdlog")
 includes("external/xmake_soloud.lua")
 add_requires("soloud")
 add_requires("sokol")
+add_requires("glm")
+add_requires("stb")
 
 set_policy("build.warning", true) -- show warnings
 set_warnings("all") -- warn about many things
@@ -15,20 +17,6 @@ target("helloworld")
 	add_deps("lilengine")
     
     add_files("demo/helloworld.cpp")
-
-	-- Copy assets
-    after_build(function (target)
-        cprint("Copying assets")
-        os.cp("$(projectdir)/assets", path.directory(target:targetfile()))
-    end)
-
-target("little")
-    set_kind("binary")
-    set_languages("cxx17")
-
-	add_deps("lilengine")
-    
-    add_files("demo/little.cpp")
 
 	-- Copy assets
     after_build(function (target)
@@ -48,6 +36,8 @@ target("lilengine")
     add_files("src/*.cpp")
 
 	add_packages("glfw", {public = true})
-	add_packages("spdlog")
+	add_packages("spdlog", {public = true})
 	add_packages("soloud", {public = true})
-	add_packages("sokol")
+	add_packages("sokol", {public = true})
+	add_packages("glm", {public = true})
+	add_packages("stb", {public = true})

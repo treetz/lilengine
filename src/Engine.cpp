@@ -23,24 +23,22 @@ namespace lilengine {
 	};
 
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
-		gEngine.impl_ = std::make_unique< EngineImpl >();
-		gEngine.impl_->graphics = GraphicsManager(window_width, window_height, fullscreen);
+		impl_ = std::make_unique< EngineImpl >();
+		impl_->graphics = GraphicsManager(window_width, window_height, fullscreen);
 	}
 
-	Engine::~Engine() {
-
-	}
+	Engine::~Engine() {}
 
 	void Engine::Startup() {
-		gEngine.impl_->graphics.Startup();
-		gEngine.impl_->input.Startup();
-		gEngine.impl_->sound.Startup();
+		impl_->graphics.Startup();
+		impl_->input.Startup();
+		impl_->sound.Startup();
 	}
 
 	void Engine::Shutdown() {
-		gEngine.impl_->sound.Shutdown();
-		gEngine.impl_->input.Shutdown();
-		gEngine.impl_->graphics.Shutdown();
+		impl_->sound.Shutdown();
+		impl_->input.Shutdown();
+		impl_->graphics.Shutdown();
 	}
 
 	void Engine::RunGameLoop(const UpdateCallback& callback) {
@@ -64,15 +62,15 @@ namespace lilengine {
 			tick_num++;
 			*/
 
-			gEngine.impl_->input.Update();
+			impl_->input.Update();
 
-			if (gEngine.impl_->graphics.ShouldQuit() == true) {
+			if (impl_->graphics.ShouldQuit() == true) {
 				break;
 			}
 
 			callback(*this);
 
-			gEngine.impl_->graphics.Draw();
+			//impl_->graphics.Draw();
 
 			// Manage timestep
 			const auto t2 = std::chrono::steady_clock::now();

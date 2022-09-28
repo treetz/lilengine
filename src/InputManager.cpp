@@ -1,27 +1,16 @@
 #pragma once
 
-#include <iostream>
-
-#include "spdlog/spdlog.h"
 #include "InputManager.h"
 
 namespace lilengine {
 
-	InputManager::InputManager() {
+	InputManager::InputManager() {}
 
-	}
+	InputManager::~InputManager() {}
 
-	InputManager::~InputManager() {
+	void InputManager::Startup() {}
 
-	}
-
-	void InputManager::Startup() {
-
-	}
-
-	void InputManager::Shutdown() {
-
-	}
+	void InputManager::Shutdown() {}
 
 	void InputManager::Update() {
 		glfwPollEvents();
