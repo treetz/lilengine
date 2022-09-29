@@ -36,15 +36,19 @@ void PlayASound(Engine& e) {
 void DrawSprites(Engine &e) {
 	Sprite s1;
 	s1.image_name = "the_office";
-	s1.position = vec3(10.f, 10.f, 0.f);
-	s1.scale = vec3(10.f, 10.f, 0.f);
-	s1.rotation = vec3(30.f, 0.f, 0.f);
-	s1.z = 1.f;
+	s1.position = vec2(10.f, 10.f);
+	s1.scale = vec3(100.f, 100.f, 0.f);
+	s1.rotation_angle = 30;
+	s1.rotation_axis = vec3(1, 0, 0);
+	s1.z = 0.5f;
 
 	Sprite s2;
-	s2.image_name = "explosion";
+	s2.image_name = "spongebob";
+	s2.position = vec2(-75.f, -40.f);
+	s2.scale = vec3(50.f, 50.f, 0.f);
+	s2.z = 0.25f;
 
-	const std::vector< Sprite >& sprites = { s1 };
+	const std::vector< Sprite >& sprites = { s1, s2 };
 	gEngine.GetGraphicsManager().Draw(sprites);
 }
 
@@ -53,7 +57,7 @@ int main(int argc, const char* argv[]) {
 
 	gEngine.GetSoundManager().LoadSound("cheer", "cheer.wav");
 	gEngine.GetGraphicsManager().LoadImage("the_office", "the_office.png");
-	gEngine.GetGraphicsManager().LoadImage("explosion", "explosion.png");
+	gEngine.GetGraphicsManager().LoadImage("spongebob", "spongebob.png");
 
 	// You can call RunGameLoop() with an empty lambda function if you don't
 	// want a callback function to be called:

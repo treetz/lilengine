@@ -25,8 +25,9 @@ namespace lilengine {
 
 	struct Sprite {
 		string image_name;
-		vec3 position, scale, rotation;
-		float z;
+		vec2 position;
+		vec3 scale, rotation_axis;
+		float rotation_angle, z;
 	};
 
 	class GraphicsManager {

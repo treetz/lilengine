@@ -177,6 +177,8 @@ namespace lilengine {
 			Image image = name_to_image_map[sprite.image_name];
 
 			// Fill out the uniform's transform field:
+				// Figure out where to add rotate function:
+				//		rotate(mat4{}, radians(sprite.rotation_angle), sprite.rotation_axis)
 			uniforms.transform = translate(mat4{ 1 }, vec3(sprite.position, sprite.z)) * scale(mat4{ 1 }, vec3(sprite.scale));
 
 			// Scale down the quad so the image always fits within the square
