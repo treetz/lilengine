@@ -4,7 +4,7 @@
 #include <algorithm>
 
 #include "GLFW/glfw3.h"
-#include "sokol_gfx.h"
+//#include "sokol_gfx.h" -- Included in Types.h
 #include "stb_image.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -14,21 +14,10 @@
 #include "Types.h"
 #include "Engine.h"
 #include "ResourceManager.h"
+#include "ECS.h"
 
 namespace lilengine {
 	using namespace Types;
-
-	struct Image {
-		sg_image image;
-		int width, height;
-	};
-
-	struct Sprite {
-		string image_name;
-		vec2 position;
-		vec3 scale, rotation_axis;
-		float rotation_angle, z;
-	};
 
 	class GraphicsManager {
 	friend class InputManager;
@@ -39,7 +28,7 @@ namespace lilengine {
 
 		void Startup();
 		void Shutdown();
-		void Draw(const std::vector< Sprite >& sprites);
+		void Draw();
 		bool ShouldQuit();
 		void SetShouldQuit();
 		bool LoadImage(const string& name, const string& p);

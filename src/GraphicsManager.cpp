@@ -143,7 +143,7 @@ namespace lilengine {
 		glfwTerminate(); // Close the window
 	}
 
-	void GraphicsManager::Draw(const std::vector< Sprite >& sprites) {
+	void GraphicsManager::Draw() {
 	// Get the current frame buffer size
 		glfwGetFramebufferSize(window, &window_width, &window_height);
 
@@ -172,7 +172,11 @@ namespace lilengine {
 		sg_apply_pipeline(pipeline);
 
 	// Draw each sprite:
-		for (auto& sprite : sprites) {
+		ECS& ecs = gEngine.GetECS();
+
+		ecs.ForEach<Sprite>( [&]( EntityID e ) {
+			Sprite& sprite = ecs.Get<Sprite>(e);
+
 			// Get the sprite's loaded image
 			Image image = name_to_image_map[sprite.image_name];
 
@@ -197,7 +201,7 @@ namespace lilengine {
 
 			// Draw one instance of our quad
 			sg_draw(0, 4, 1);
-		}
+		} );
 
 	// Finish drawing
 		sg_end_pass();

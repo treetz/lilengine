@@ -11,34 +11,36 @@
 #include "InputManager.h"
 #include "ResourceManager.h"
 #include "SoundManager.h"
+#include "ECS.h"
 
 namespace lilengine {
 
 	class Engine::EngineImpl {
 	public:
-		GraphicsManager graphics;
-		InputManager input;
-		ResourceManager resources;
-		SoundManager sound;
+		GraphicsManager graphics_manager;
+		InputManager input_manager;
+		ResourceManager resource_manager;
+		SoundManager sound_manager;
+		ECS ecs;
 	};
 
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
 		impl_ = std::make_unique< EngineImpl >();
-		impl_->graphics = GraphicsManager(window_width, window_height, fullscreen);
+		impl_->graphics_manager = GraphicsManager(window_width, window_height, fullscreen);
 	}
 
 	Engine::~Engine() {}
 
 	void Engine::Startup() {
-		impl_->graphics.Startup();
-		impl_->input.Startup();
-		impl_->sound.Startup();
+		impl_->graphics_manager.Startup();
+		impl_->input_manager.Startup();
+		impl_->sound_manager.Startup();
 	}
 
 	void Engine::Shutdown() {
-		impl_->sound.Shutdown();
-		impl_->input.Shutdown();
-		impl_->graphics.Shutdown();
+		impl_->sound_manager.Shutdown();
+		impl_->input_manager.Shutdown();
+		impl_->graphics_manager.Shutdown();
 	}
 
 	void Engine::RunGameLoop(const UpdateCallback& callback) {
@@ -62,15 +64,15 @@ namespace lilengine {
 			tick_num++;
 			*/
 
-			impl_->input.Update();
+			impl_->input_manager.Update();
 
-			if (impl_->graphics.ShouldQuit() == true) {
+			if (impl_->graphics_manager.ShouldQuit() == true) {
 				break;
 			}
 
 			callback(*this);
 
-			//impl_->graphics.Draw();
+			impl_->graphics_manager.Draw();
 
 			// Manage timestep
 			const auto t2 = std::chrono::steady_clock::now();
@@ -81,18 +83,22 @@ namespace lilengine {
 	}
 
 	GraphicsManager& Engine::GetGraphicsManager() {
-		return impl_->graphics;
+		return impl_->graphics_manager;
 	}
 
 	InputManager& Engine::GetInputManager() {
-		return impl_->input;
+		return impl_->input_manager;
 	}
 
 	ResourceManager& Engine::GetResourceManager() {
-		return impl_->resources;
+		return impl_->resource_manager;
 	}
 
 	SoundManager& Engine::GetSoundManager() {
-		return impl_->sound;
+		return impl_->sound_manager;
+	}
+
+	ECS& Engine::GetECS() {
+		return impl_->ecs;
 	}
 }

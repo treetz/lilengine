@@ -15,6 +15,7 @@ namespace lilengine {
 	class InputManager;
 	class ResourceManager;
 	class SoundManager;
+	class ECS;
 
 	class Engine {
 
@@ -32,6 +33,7 @@ namespace lilengine {
 		InputManager& GetInputManager();
 		ResourceManager& GetResourceManager();
 		SoundManager& GetSoundManager();
+		ECS& GetECS();
 
 	private:
 		class EngineImpl;
