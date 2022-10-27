@@ -22,7 +22,9 @@ int main(int argc, const char* argv[]) {
 	gEngine.Startup();
 
 	// Load a game script.
-	gEngine.GetScriptingManager().LoadScript("pong", "pong.lua");
+	ScriptingManager& scripting_manager = gEngine.GetScriptingManager();
+	scripting_manager.LoadScript("pong_setup", "pong_setup.lua");
+	scripting_manager.RunScript("pong_setup");
 
 	gEngine.RunGameLoop(UpdateCallback);
 	gEngine.Shutdown();

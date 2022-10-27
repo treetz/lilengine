@@ -8,6 +8,7 @@ namespace lilengine {
 	ScriptingManager::~ScriptingManager() {}
 
 	void ScriptingManager::Startup() {
+
 		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table);
 		
 		// Make the math random seed always the same for debugging.
@@ -165,7 +166,7 @@ namespace lilengine {
 
 		// Expose the graphics manager's ability to load sprites to
 		// Lua.
-		lua.set_function("LoadSprite",
+		lua.set_function("LoadImage",
 			[&](const string& name, const string& path) {
 				return gEngine.GetGraphicsManager().LoadImage(name, path);
 			}
@@ -299,18 +300,25 @@ namespace lilengine {
 	}
 
 	bool ScriptingManager::LoadScript(const string& name, const string& p) {
+		spdlog::info("Loading script: {}", p);
+		
 		if (name_to_script_map.count(name) == 0) {
 			gEngine.GetResourceManager().SetRootPath("assets//scripts");
 			path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
 			name_to_script_map[name] = lua.load_file(resolved_path.string().c_str());
+			/*
 			ECS& ecs = gEngine.GetECS();
 			ecs.Get<Script>(ecs.Create()).name = name;
+			*/
 		}
+
+		spdlog::info("Script loaded.");
 		return true;
 	}
 
 	bool ScriptingManager::RunScript(const string& name) {
 		if (name_to_script_map.count(name) != 0) {
+			spdlog::info("Running script: {}.lua", name);
 			name_to_script_map[name]();
 			return true;
 		}

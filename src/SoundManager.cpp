@@ -2,6 +2,8 @@
 
 #include "SoundManager.h"
 
+#include "spdlog/spdlog.h"
+
 namespace lilengine {
 
 	SoundManager::SoundManager() {}
@@ -17,12 +19,16 @@ namespace lilengine {
 	}
 
 	bool SoundManager::LoadSound(const string& name, const string& p) {
+		spdlog::info("Loading sound: {}", p);
+		
 		// If the sound has not been loaded into the engine yet load it.
 		if (name_to_sound_map.count(name) == 0) {
 			gEngine.GetResourceManager().SetRootPath("assets//sounds");
 			path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
 			name_to_sound_map[name].load(resolved_path.string().c_str());
 		}
+
+		spdlog::info("Sound loaded.");
 		return true;
 	}
 

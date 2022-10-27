@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <functional>
 
+#include "spdlog/spdlog.h"
+
 #include "Types.h"
 
 namespace lilengine {
@@ -18,6 +20,7 @@ namespace lilengine {
 	public:
 		//
 		EntityID Create() {
+			spdlog::info("Game object created.");
 			return ++current_ID;
 		}
 

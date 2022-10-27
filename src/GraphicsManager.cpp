@@ -222,6 +222,8 @@ namespace lilengine {
 	}
 
 	bool GraphicsManager::LoadImage(const string& name, const string& p) {
+		spdlog::info("Loading Image: {}", p);
+		
 		if (name_to_image_map.count(name) == 0) {
 			gEngine.GetResourceManager().SetRootPath("assets//sprites");
 			path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
@@ -256,6 +258,7 @@ namespace lilengine {
 			// Once the GPU has the image data we can free its memory
 			stbi_image_free(data);
 		}
+		spdlog::info("Image Loaded.");
 		return true;
 	}
 
