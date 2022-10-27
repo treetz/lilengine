@@ -176,6 +176,7 @@ namespace lilengine {
 
 		ecs.ForEach<Sprite>( [&]( EntityID e ) {
 			Sprite& sprite = ecs.Get<Sprite>(e);
+			Position& position = ecs.Get<Position>(e);
 
 			// Get the sprite's loaded image
 			Image image = name_to_image_map[sprite.image_name];
@@ -183,7 +184,7 @@ namespace lilengine {
 			// Fill out the uniform's transform field:
 				// Figure out where to add rotate function:
 				//		rotate(mat4{}, radians(sprite.rotation_angle), sprite.rotation_axis)
-			uniforms.transform = translate(mat4{ 1 }, vec3(sprite.position, sprite.z)) * scale(mat4{ 1 }, vec3(sprite.scale));
+			uniforms.transform = translate(mat4{ 1 }, vec3(position.x, position.y, sprite.z)) * scale(mat4{ 1 }, vec3(sprite.scale));
 
 			// Scale down the quad so the image always fits within the square
 			if (image.width < image.height) {

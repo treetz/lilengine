@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "SoundManager.h"
 #include "ECS.h"
+#include "ScriptingManager.h"
 
 namespace lilengine {
 
@@ -22,6 +23,7 @@ namespace lilengine {
 		ResourceManager resource_manager;
 		SoundManager sound_manager;
 		ECS ecs;
+		ScriptingManager scripting_manager;
 	};
 
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
@@ -35,12 +37,14 @@ namespace lilengine {
 		impl_->graphics_manager.Startup();
 		impl_->input_manager.Startup();
 		impl_->sound_manager.Startup();
+		impl_->scripting_manager.Startup();
 	}
 
 	void Engine::Shutdown() {
 		impl_->sound_manager.Shutdown();
 		impl_->input_manager.Shutdown();
 		impl_->graphics_manager.Shutdown();
+		impl_->scripting_manager.Shutdown();
 	}
 
 	void Engine::RunGameLoop(const UpdateCallback& callback) {
@@ -55,7 +59,7 @@ namespace lilengine {
 		while (true) {
 			const auto t1 = std::chrono::steady_clock::now();
 
-			/* Timestep testing 
+			/*// Timestep testing 
 			if (std::chrono::duration<double>(t1 - t0).count() >= 1) {
 				spdlog::info("Game Loop is Finished!");
 				break;
@@ -69,6 +73,9 @@ namespace lilengine {
 			if (impl_->graphics_manager.ShouldQuit() == true) {
 				break;
 			}
+
+			// Run loaded scripts
+			impl_->scripting_manager.Update();
 
 			callback(*this);
 
@@ -100,5 +107,9 @@ namespace lilengine {
 
 	ECS& Engine::GetECS() {
 		return impl_->ecs;
+	}
+
+	ScriptingManager& Engine::GetScriptingManager() {
+		return impl_->scripting_manager;
 	}
 }

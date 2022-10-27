@@ -6,6 +6,7 @@ add_requires("soloud")
 add_requires("sokol")
 add_requires("glm")
 add_requires("stb")
+add_requires("lua", "sol2")
 
 set_policy("build.warning", true) -- show warnings
 set_warnings("all") -- warn about many things
@@ -41,3 +42,5 @@ target("lilengine")
 	add_packages("sokol", {public = true})
 	add_packages("glm", {public = true})
 	add_packages("stb", {public = true})
+	add_packages("lua")
+	add_packages("sol2", {public = true})
