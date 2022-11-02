@@ -9,6 +9,8 @@
 
 #include "GraphicsManager.h"
 
+#include <iostream>
+
 using namespace glm;
 
 // The Uniforms struct will not be used outside the graphics manager so it can be defined within an anonymous namespace
@@ -175,11 +177,22 @@ namespace lilengine {
 		ECS& ecs = gEngine.GetECS();
 
 		ecs.ForEach<Sprite>( [&]( EntityID e ) {
+
 			Sprite& sprite = ecs.Get<Sprite>(e);
 			Position& position = ecs.Get<Position>(e);
 
+			spdlog::info("Sprite name: {}", sprite.image_name);
+			spdlog::info("Sprite position: {}, {}", position.x, position.y);
+
+			if (name_to_image_map.count(sprite.image_name) == 0) {
+				spdlog::error("Sprite name not found in name_to_image_map");
+			}
+
 			// Get the sprite's loaded image
 			Image image = name_to_image_map[sprite.image_name];
+
+			spdlog::info("Image width: {}", image.width);
+			spdlog::info("Image height: {}", image.height);
 
 			// Fill out the uniform's transform field:
 				// Figure out where to add rotate function:

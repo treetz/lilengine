@@ -205,7 +205,7 @@ namespace lilengine {
 		);
 
 		lua.set_function("GetSprite",
-			[&](EntityID entity) -> Sprite& {
+			[&](EntityID entity) -> Sprite {
 				return gEngine.GetECS().Get<Sprite>(entity);
 			}
 		);
