@@ -5,9 +5,9 @@ ball = CreateGameObject()
 
 ball_sprite = GetSprite(ball)
 ball_sprite.image_name = "spongebob"
-ball_sprite.scale = vec3(100.0, 100.0, 0.0)
+ball_sprite.scale = vec3(100, 100, 100)
 ball_sprite.rotation_axis = vec3(0, 0, 0)
-ball_sprite.rotation_angle = 0.0
+ball_sprite.rotation_angle = 0
 ball_sprite.z = 1.0
 
 -- Things that do not work:
@@ -19,8 +19,8 @@ ball_sprite.z = 1.0
 --ball_sprite.image_name = "spongebob"
 
 --GetSprite(ball).image_name = "spongebob"
---GetSprite(ball).scale = vec3(100.0, 100.0, 0.0)
---GetSprite(ball).rotation_axis = vec3(0, 0, 0)
+--GetSprite(ball).scale = vec3.new(100.0, 100.0, 0.0)
+--GetSprite(ball).rotation_axis = vec3.new(0, 0, 0)
 --GetSprite(ball).rotation_angle = 0.0
 --GetSprite(ball).z = 1.0
 
