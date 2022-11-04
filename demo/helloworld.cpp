@@ -21,16 +21,21 @@ void UpdateCallback(Engine& e) {
 int main(int argc, const char* argv[]) {
 	gEngine.Startup();
 
-	// Load and run a game setup script.
-	
+	//GraphicsManager& graphics_manager = gEngine.GetGraphicsManager();
+	ECS& ecs = gEngine.GetECS();
+
+	// Load up game scripts.
 	ScriptingManager& scripting_manager = gEngine.GetScriptingManager();
 	scripting_manager.LoadScript("pong_setup", "pong_setup.lua");
+	scripting_manager.LoadScript("pong_update", "pong_update.lua");
+
+	// Run game setup scripts.
 	scripting_manager.RunScript("pong_setup");
-	
+
+	// All scripts added to the ECS will run every frame.
+	ecs.Get<Script>(ecs.Create()).name = "pong_update";
+
 	/*
-	GraphicsManager& graphics_manager = gEngine.GetGraphicsManager();
-	ECS& ecs = gEngine.GetECS();
-	
 	graphics_manager.LoadImage("spongebob", "spongebob.png");
 
 	EntityID ball = ecs.Create();

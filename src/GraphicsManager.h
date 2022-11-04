@@ -33,6 +33,8 @@ namespace lilengine {
 		void SetShouldQuit();
 		bool LoadImage(const string& name, const string& p);
 		bool DestroyImage(const string& name);
+		int GetWindowWidth();
+		int GetWindowHeight();
 
 	private:
 		int window_width, window_height;

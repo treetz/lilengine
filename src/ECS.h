@@ -18,9 +18,8 @@ namespace lilengine {
 	// various components. 
 	class ECS {
 	public:
-		//
+		// Returns the entity id of the created game object
 		EntityID Create() {
-			spdlog::info("Game object created.");
 			return ++current_ID;
 		}
 

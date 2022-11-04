@@ -12,7 +12,7 @@ namespace lilengine {
 		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table);
 		
 		// Make the math random seed always the same for debugging.
-		lua.script("math.randomseed(0)");
+		//lua.script("math.randomseed(0)");
 
 		// Expose the input managers functionality to Lua.
 		lua.set_function("KeyIsDown", 
@@ -205,7 +205,7 @@ namespace lilengine {
 		);
 
 		lua.set_function("GetSprite",
-			[&](EntityID entity) -> Sprite {
+			[&](EntityID entity) -> Sprite& {
 				return gEngine.GetECS().Get<Sprite>(entity);
 			}
 		);
@@ -280,9 +280,23 @@ namespace lilengine {
 		// Expose sol::state lua to users so they can call 
 		// lua.new_usertype() for their own structs and 
 		// lua.set_function() to expose their own functions.
-		lua.set_function("Lua",
+		lua.set_function("lua",
 			[&]() {
 				return &lua;
+			}
+		);
+
+		// Returns the width of the window
+		lua.set_function("GetWindowWidth",
+			[&]() {
+				return gEngine.GetGraphicsManager().GetWindowWidth();
+			}
+		);
+
+		// Returns the height of the window
+		lua.set_function("GetWindowHeight",
+			[&]() {
+				return gEngine.GetGraphicsManager().GetWindowHeight();
 			}
 		);
 	}
