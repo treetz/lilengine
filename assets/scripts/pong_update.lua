@@ -1,13 +1,3 @@
--- Clamp the speed of the ball.
-if clamp_ball_speed then
-	if ball_velocity.x > 10 then
-		ball_velocity.x = 10
-	end 
-	if ball_velocity.y > 10 then
-		ball_velocity.y = 10
-	end
-end
-
 -- Update the location of the ball and player hitboxes.
 ball_hitbox_right = ball_position.x + (ball_hitbox_width / 2)
 ball_hitbox_left = ball_position.x - (ball_hitbox_width / 2)
@@ -38,11 +28,14 @@ end
 -- velocity.
 if ball_status == "start" then
 	if math.random(0, 1) == 0 then
-		ball_velocity.x = 50.0
-		ball_velocity.y = math.random(-50.0, 50.0)
+		ball_velocity.x = 100.0
 	else
-		ball_velocity.x = -50.0
-		ball_velocity.y = math.random(-50.0, 50.0)
+		ball_velocity.x = -100.0
+	end
+	if math.random(0, 1) == 0 then
+		ball_velocity.y = math.random(20, 100)
+	else
+		ball_velocity.y = math.random(-100, -20)
 	end
 	ball_status = "play"
 end
@@ -100,7 +93,7 @@ elseif (ball_position.x + (ball_hitbox_width / 2)) > (GetWindowWidth() / 4.5) th
 elseif (ball_position.x - (ball_hitbox_width / 2)) < ((GetWindowWidth() / 4.5) * -1) then
 	ball_status = "ready"
 	player_1_score = player_1_score + 1
-	print("\nPlayer 2 scored!\nThe score is now " .. player_2_score .. " to " .. player_1_score)
+	print("\nPlayer 1 scored!\nThe score is now " .. player_2_score .. " to " .. player_1_score)
 	PlaySound("bubbles")
 
 -- Collision between the ball and the top and bottom sides of the 
@@ -112,6 +105,32 @@ elseif (ball_position.y + (ball_hitbox_height / 2)) > (GetWindowHeight() / 4.5) 
 elseif (ball_position.y - (ball_hitbox_height / 2)) < ((GetWindowHeight() / 4.5) * -1) then
 	ball_velocity.y = ball_velocity.y * -1 --* ball_speed_multiplier
 	PlaySound("bubbles")
+end
+
+-- Collision between the players and the top and bottom of the screen.
+-- Player 1
+if (player_1_position.y + (player_1_hitbox_height / 2)) >= (GetWindowHeight() / 4.5) then
+	player_1_position.y = (GetWindowHeight() / 4.5) - (player_1_hitbox_height / 2)
+
+elseif (player_1_position.y - (player_1_hitbox_height / 2)) <= ((GetWindowHeight() / 4.5) * -1) then
+	player_1_position.y = ((GetWindowHeight() / 4.5) * -1) + (player_1_hitbox_height / 2)
+end
+
+-- Player 2
+if (player_2_position.y + (player_2_hitbox_height / 2)) >= (GetWindowHeight() / 4.5) then
+	player_2_position.y = (GetWindowHeight() / 4.5) - (player_2_hitbox_height / 2)
+
+elseif (player_2_position.y - (player_2_hitbox_height / 2)) <= ((GetWindowHeight() / 4.5) * -1) then
+	player_2_position.y = ((GetWindowHeight() / 4.5) * -1) + (player_2_hitbox_height / 2)
+end
+
+-- Clamp the speed of the ball.
+if clamp_ball_speed then
+	if ball_velocity.x > clamp_speed then
+		ball_velocity.x = clamp_speed
+	elseif ball_velocity.x < (-1 * clamp_speed) then
+		ball_velocity.x = (-1 * clamp_speed)
+	end
 end
 
 -- BALL AND PLAYER MOVEMENT

@@ -44,8 +44,8 @@ player_1_velocity = GetVelocity(player_1)
 player_1_velocity.x = 0.0
 player_1_velocity.y = 0.0
 
-player_1_hitbox_width = 5.0
-player_1_hitbox_height = 4.0
+player_1_hitbox_width = 12.5
+player_1_hitbox_height = 25.0
 
 -- Player 2
 player_2 = CreateGameObject()
@@ -65,14 +65,15 @@ player_2_velocity = GetVelocity(player_2)
 player_2_velocity.x = 0.0
 player_2_velocity.y = 0.0
 
-player_2_hitbox_width = 4.25
-player_2_hitbox_height = 4.25
+player_2_hitbox_width = 12.5
+player_2_hitbox_height = 25.0
 
 player_1_score = 0
 player_2_score = 0
 
 ball_status = "ready"
-ball_speed_multiplier = 1.5 
-clamp_ball_speed = false
+ball_speed_multiplier = 1.25 
+clamp_ball_speed = true
+clamp_speed = 900
 
 print("\nWelcome to Pong!")
