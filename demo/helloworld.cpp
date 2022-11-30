@@ -26,29 +26,15 @@ int main(int argc, const char* argv[]) {
 
 	// Load up game scripts.
 	ScriptingManager& scripting_manager = gEngine.GetScriptingManager();
-	scripting_manager.LoadScript("pong_setup", "pong_setup.lua");
-	scripting_manager.LoadScript("pong_update", "pong_update.lua");
+	scripting_manager.LoadScript("farming_setup", "farming_setup.lua");
+	scripting_manager.LoadScript("farming_update", "farming_update.lua");
+
 
 	// Run game setup scripts.
-	scripting_manager.RunScript("pong_setup");
+	scripting_manager.RunScript("farming_setup");
 
 	// All scripts added to the ECS will run every frame.
-	ecs.Get<Script>(ecs.Create()).name = "pong_update";
-
-	/*
-	graphics_manager.LoadImage("spongebob", "spongebob.png");
-
-	EntityID ball = ecs.Create();
-
-	ecs.Get<Sprite>(ball).image_name = "spongebob";
-	ecs.Get<Sprite>(ball).scale = vec3(100.0, 100.0, 0.0);
-	ecs.Get<Sprite>(ball).rotation_axis = vec3(0, 0, 0);
-	ecs.Get<Sprite>(ball).rotation_angle = 0.0;
-	ecs.Get<Sprite>(ball).z = 1.0;
-
-	ecs.Get<Position>(ball).x = 10.0;
-	ecs.Get<Position>(ball).y = 0.0;
-	*/
+	ecs.Get<Script>(ecs.Create()).name = "farming_update";
 
 	gEngine.RunGameLoop(UpdateCallback);
 	gEngine.Shutdown();
