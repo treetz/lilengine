@@ -11,6 +11,7 @@
 #include "SoundManager.h"
 #include "ECS.h"
 #include "ScriptingManager.h"
+#include "NetworkManager.h"
 
 using namespace lilengine;
 
@@ -24,10 +25,27 @@ int main(int argc, const char* argv[]) {
 	//GraphicsManager& graphics_manager = gEngine.GetGraphicsManager();
 	ECS& ecs = gEngine.GetECS();
 
+	// Set up client
+	//Client client;// create client entity
+	// set up network manager instance
+	// NetworkManager& networking_manager = gEngine.GetNetworkManager();
+	// // set create client to Client struct 
+	// networking_manager.client = networking_manager.CreateClient();
+	// // assign client an id
+	// client.id = ecs.Create();
+	// // assign client data to Client struct
+	// client.client = networking_manager.client;
+	// printf("Your client id is %d\n", client.id);
+
+
 	// Load up game scripts.
 	ScriptingManager& scripting_manager = gEngine.GetScriptingManager();
 	scripting_manager.LoadScript("pong_setup", "pong_setup.lua");
 	scripting_manager.LoadScript("pong_update", "pong_update.lua");
+	
+	// Load up server scripts
+	scripting_manager.LoadScript("client_tracker", "clients.lua");
+	//scripting_manager.LoadScript("")
 
 	// Run game setup scripts.
 	scripting_manager.RunScript("pong_setup");
@@ -50,7 +68,16 @@ int main(int argc, const char* argv[]) {
 	ecs.Get<Position>(ball).y = 0.0;
 	*/
 
+	// 
+	// Client c;
+
+	// NetworkManager& networking_manager = gEngine.GetNetworkManager();
+	// networking_manager.CreateClient(networking_manager.client);
+	// ecs.Get<c>(ecs.Create()).id = c.id;
+
+	printf("Starting Game Loop!\n");
 	gEngine.RunGameLoop(UpdateCallback);
+	printf("Ending Game Loop!\n");
 	gEngine.Shutdown();
 	
 
