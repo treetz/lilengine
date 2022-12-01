@@ -17,13 +17,12 @@
 using namespace lilengine;
 
 void UpdateCallback(Engine& e) {
-	/*
-	TileMapManager& tile_map_manager = gEngine.GetTileMapManager();
-	spdlog::info(tile_map_manager.GetTile(168, 90));
-	*/
+
 }
 
 int main(int argc, const char* argv[]) {
+	srand(time(0));
+
 	gEngine.Startup();
 
 	//GraphicsManager& graphics_manager = gEngine.GetGraphicsManager();
