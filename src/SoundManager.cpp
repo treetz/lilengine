@@ -27,8 +27,6 @@ namespace lilengine {
 			path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
 			name_to_sound_map[name].load(resolved_path.string().c_str());
 		}
-
-		spdlog::info("Sound loaded.");
 		return true;
 	}
 

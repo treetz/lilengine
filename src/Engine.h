@@ -19,6 +19,7 @@ namespace lilengine {
 	class ScriptingManager;
 	class NetworkManager;
 	class ChatBox;
+	class TileMapManager;
 
 	class Engine {
 
@@ -40,6 +41,8 @@ namespace lilengine {
 		ScriptingManager& GetScriptingManager();
 		NetworkManager& GetNetworkManager();
 		ChatBox& GetChatBox();
+		TileMapManager& GetTileMapManager();
+
 
 	private:
 		class EngineImpl;

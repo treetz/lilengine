@@ -1,7 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include <random>
 
+#include <iostream>
 #include "spdlog/spdlog.h"
 
 #include "Engine.h"
@@ -12,11 +13,16 @@
 #include "ECS.h"
 #include "ScriptingManager.h"
 #include "NetworkManager.h"
+#include "TileMapManager.h"
+
 
 using namespace lilengine;
 
 void UpdateCallback(Engine& e) {
-
+	/*
+	TileMapManager& tile_map_manager = gEngine.GetTileMapManager();
+	spdlog::info(tile_map_manager.GetTile(168, 90));
+	*/
 }
 
 int main(int argc, const char* argv[]) {
@@ -46,27 +52,24 @@ int main(int argc, const char* argv[]) {
 	// Load up server scripts
 	scripting_manager.LoadScript("client_tracker", "clients.lua");
 	//scripting_manager.LoadScript("")
+	scripting_manager.LoadScript("farming_setup", "farming_setup.lua");
+	scripting_manager.LoadScript("farming_update", "farming_update.lua");
 
 	// Run game setup scripts.
-	scripting_manager.RunScript("pong_setup");
+	scripting_manager.RunScript("farming_setup");
 
 	// All scripts added to the ECS will run every frame.
-	ecs.Get<Script>(ecs.Create()).name = "pong_update";
+	ecs.Get<Script>(ecs.Create()).name = "farming_update";
 
-	/*
-	graphics_manager.LoadImage("spongebob", "spongebob.png");
+	// TILE MAP
+	std::vector<string> tile_set{ "grass_1", "grass_2", "grass_3", "grass_4" };
+	std::vector<int> world_map;
+	for (int i = 0; i < 180; i++) {
+		world_map.push_back(rand() % 4 + 1);
+	}
 
-	EntityID ball = ecs.Create();
-
-	ecs.Get<Sprite>(ball).image_name = "spongebob";
-	ecs.Get<Sprite>(ball).scale = vec3(100.0, 100.0, 0.0);
-	ecs.Get<Sprite>(ball).rotation_axis = vec3(0, 0, 0);
-	ecs.Get<Sprite>(ball).rotation_angle = 0.0;
-	ecs.Get<Sprite>(ball).z = 1.0;
-
-	ecs.Get<Position>(ball).x = 10.0;
-	ecs.Get<Position>(ball).y = 0.0;
-	*/
+	TileMapManager& tile_map_manager = gEngine.GetTileMapManager();
+	tile_map_manager.LoadTileMap(tile_set, 10, world_map, 18, 10);
 
 	// 
 	// Client c;
@@ -80,7 +83,6 @@ int main(int argc, const char* argv[]) {
 	printf("Ending Game Loop!\n");
 	gEngine.Shutdown();
 	
-
 	std::cout << "Hello, World!\n";
 	return 0;
 }

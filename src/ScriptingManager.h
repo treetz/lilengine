@@ -6,6 +6,7 @@
 #include <sol/sol.hpp>
 
 #include "spdlog/spdlog.h"
+#include <math.h>
 
 #include "Types.h"
 #include "Engine.h"
@@ -14,6 +15,7 @@
 #include "ResourceManager.h"
 #include "SoundManager.h"
 #include "ECS.h"
+#include "TileMapManager.h"
 
 namespace lilengine {
 	

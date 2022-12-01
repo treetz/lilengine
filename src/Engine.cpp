@@ -15,6 +15,8 @@
 #include "ScriptingManager.h"
 #include "NetworkManager.h"
 #include "Chatbox.h"
+#include "TileMapManager.h"
+
 
 namespace lilengine {
 
@@ -26,8 +28,11 @@ namespace lilengine {
 		SoundManager sound_manager;
 		ECS ecs;
 		ScriptingManager scripting_manager;
+
 		NetworkManager network_manager;
 		ChatBox chatbox;
+		TileMapManager tile_map_manager;
+
 	};
 
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
@@ -46,11 +51,12 @@ namespace lilengine {
 	}
 
 	void Engine::Shutdown() {
+		impl_->scripting_manager.Shutdown();
 		impl_->sound_manager.Shutdown();
 		impl_->input_manager.Shutdown();
 		impl_->graphics_manager.Shutdown();
 		impl_->scripting_manager.Shutdown();
-		
+
 	}
 
 	void Engine::RunGameLoop(const UpdateCallback& callback) {
@@ -142,11 +148,17 @@ namespace lilengine {
 		return impl_->scripting_manager;
 	}
 
+
 	NetworkManager& Engine::GetNetworkManager() {
 		return impl_->network_manager;
 	}
 
 	ChatBox& Engine::GetChatBox(){
 		return impl_->chatbox;
+    }
+
+	TileMapManager& Engine::GetTileMapManager() {
+		return impl_->tile_map_manager;
+
 	}
 }
