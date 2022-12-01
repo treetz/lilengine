@@ -14,6 +14,7 @@
 #include "ECS.h"
 #include "ScriptingManager.h"
 #include "NetworkManager.h"
+#include "Chatbox.h"
 
 namespace lilengine {
 
@@ -26,6 +27,7 @@ namespace lilengine {
 		ECS ecs;
 		ScriptingManager scripting_manager;
 		NetworkManager network_manager;
+		ChatBox chatbox;
 	};
 
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
@@ -142,5 +144,9 @@ namespace lilengine {
 
 	NetworkManager& Engine::GetNetworkManager() {
 		return impl_->network_manager;
+	}
+
+	ChatBox& Engine::GetChatBox(){
+		return impl_->chatbox;
 	}
 }

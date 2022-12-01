@@ -18,6 +18,7 @@ namespace lilengine {
 	class ECS;
 	class ScriptingManager;
 	class NetworkManager;
+	class ChatBox;
 
 	class Engine {
 
@@ -38,6 +39,7 @@ namespace lilengine {
 		ECS& GetECS();
 		ScriptingManager& GetScriptingManager();
 		NetworkManager& GetNetworkManager();
+		ChatBox& GetChatBox();
 
 	private:
 		class EngineImpl;

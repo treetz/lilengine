@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "spdlog/spdlog.h"
+#include <string>
 
 #include "Engine.h"
 #include "GraphicsManager.h"
@@ -12,10 +13,26 @@
 #include "ECS.h"
 #include "ScriptingManager.h"
 #include "NetworkManager.h"
+#include "Chatbox.h"
+
 
 using namespace lilengine;
+static ChatBox& chatbox = gEngine.GetChatBox();
+
+void SendPacket(ENetPeer * peer, const char* data){
+
+    ENetPacket * packet = enet_packet_create(data, strlen(data) + 1, ENET_PACKET_FLAG_RELIABLE);
+    enet_peer_send(peer, 0, packet);
+
+
+};
 
 int main(int argc, const char* argv[]){
+
+    printf("Please enter your username\n");
+    char username[80];
+    scanf("%s", &username);
+
     spdlog::info("Creating client...\n");
 
     if(enet_initialize () != 0){
@@ -72,20 +89,44 @@ int main(int argc, const char* argv[]){
 
         }
 
-        while(enet_host_service(networking_manager.client, &networking_manager.client_event, 1000) > 0){
-				printf("Updating client...\n");
-				switch(networking_manager.client_event.type){
+        SendPacket(networking_manager.peer, "test_data");
+    
 
-					// if we receive any data
-					case ENET_EVENT_TYPE_RECEIVE:
-					printf("A packet of length %u containing %s was received from %x:%u on channel %u\n",
-							networking_manager.client_event.packet -> dataLength/* length of data */,
-							networking_manager.client_event.packet -> data/* containing data of packet*/,
-							networking_manager.client_event.peer -> address.host,
-							networking_manager.client_event.peer -> address.port,
-							networking_manager.client_event.channelID);
-					break;	
+    chatbox.Init();
 
-				}
-			}
+    bool running = true;
+    
+
+    while(running){
+
+
+        string message = chatbox.CheckBoxInput();
+
+        char strarr[message.length() + 1];
+        strcpy(strarr, message.c_str());
+        chatbox.PostMessage(username, strarr);
+
+        if(message == "/exit") running = false;
+
+    }
+
+    enet_peer_disconnect(networking_manager.peer, 0);
+
+    while(enet_host_service(networking_manager.client, &networking_manager.client_event, 3000) > 0){
+
+        switch(networking_manager.client_event.type){
+
+            case ENET_EVENT_TYPE_RECEIVE:
+                enet_packet_destroy(networking_manager.client_event.packet);
+                break;
+            
+            case ENET_EVENT_TYPE_DISCONNECT:
+                spdlog::info("Disconnection Succeded.");
+                break;
+        }
+    }
+   
+
+
+    return EXIT_SUCCESS;
 }

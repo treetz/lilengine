@@ -5,11 +5,12 @@ includes("external/xmake_soloud.lua")
 add_requires("soloud")
 includes("external/xmake_enet.lua")
 add_requires("enet")
+add_requires("ncurses")
 add_requires("sokol")
 add_requires("glm")
 add_requires("stb")
 add_requires("lua", "sol2")
-
+add_requires("ncurses")
 set_policy("build.warning", true) -- show warnings
 set_warnings("all") -- warn about many things
 
@@ -63,3 +64,4 @@ target("lilengine")
 	add_packages("stb", {public = true})
 	add_packages("lua")
 	add_packages("sol2", {public = true})
+    add_packages("ncurses", {public = true})
