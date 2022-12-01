@@ -25,7 +25,7 @@ player = CreateGameObject()
 
 -- Player Sprite Component
 player_sprite = GetSprite(player)
-player_sprite.image_name = "player_front"
+player_sprite.image_name = "psf"
 player_sprite.scale = vec3.new(10.0, 10.0, 0.0)
 player_sprite.rotation_axis = vec3.new(0.0, 0.0, 0.0)
 player_sprite.rotation_angle = 0

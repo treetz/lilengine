@@ -172,8 +172,7 @@ namespace lilengine {
 			}
 		);
 
-		// Expose the tile map manager's ability to load a tile map
-		// to Lua.
+		// Expose the tile map manager to Lua.
 		/*
 		lua.set_function("LoadTileMap",
 			[&](sol::table tile_set, int tile_size, sol::table world_map, int cols, int rows) {
@@ -181,6 +180,12 @@ namespace lilengine {
 			}
 		);
 		*/
+		lua.set_function("GetTile",
+			[&](int x, int y) {
+				spdlog::info("Hello from the Lua function");
+				return gEngine.GetTileMapManager().GetTile(x, y);
+			}
+		);
 
 		// Expose the entity component system's functionality to
 		// Lua.

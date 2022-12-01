@@ -17,12 +17,13 @@
 using namespace lilengine;
 
 void UpdateCallback(Engine& e) {
-	
+	/*
+	TileMapManager& tile_map_manager = gEngine.GetTileMapManager();
+	spdlog::info(tile_map_manager.GetTile(168, 90));
+	*/
 }
 
 int main(int argc, const char* argv[]) {
-	srand(time(0));
-
 	gEngine.Startup();
 
 	//GraphicsManager& graphics_manager = gEngine.GetGraphicsManager();
@@ -32,7 +33,6 @@ int main(int argc, const char* argv[]) {
 	ScriptingManager& scripting_manager = gEngine.GetScriptingManager();
 	scripting_manager.LoadScript("farming_setup", "farming_setup.lua");
 	scripting_manager.LoadScript("farming_update", "farming_update.lua");
-
 
 	// Run game setup scripts.
 	scripting_manager.RunScript("farming_setup");

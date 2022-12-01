@@ -17,6 +17,15 @@
 #include "ScriptingManager.h"
 
 namespace lilengine {	
+	class Tile {
+	public:
+		Tile();
+		~Tile();
+		Tile(EntityID id, int tile_size, int x, int y);
+
+		EntityID id;
+		int tile_size, x, y;
+	};
 
 	class TileMapManager {
 	public:
@@ -24,5 +33,11 @@ namespace lilengine {
 		~TileMapManager();
 
 		bool LoadTileMap(std::vector<string> tile_set, int tile_size, std::vector<int> world_map, int cols, int rows);
+		EntityID GetTile(int x, int y);
+
+		void PrintHi();
+
+	private:
+		std::vector<Tile> tiles;
 	};
 }
