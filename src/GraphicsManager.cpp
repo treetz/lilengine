@@ -182,7 +182,7 @@ namespace lilengine {
 			Position& position = ecs.Get<Position>(e);
 
 			if (name_to_image_map.count(sprite.image_name) == 0) {
-				spdlog::error("Sprite name not found in name_to_image_map");
+				spdlog::error("Sprite name {} not found in name_to_image_map", sprite.image_name);
 			}
 
 			// Get the sprite's loaded image
@@ -265,7 +265,6 @@ namespace lilengine {
 			// Once the GPU has the image data we can free its memory
 			stbi_image_free(data);
 		}
-		spdlog::info("Image Loaded.");
 		return true;
 	}
 
@@ -275,7 +274,7 @@ namespace lilengine {
 			return true;
 		}
 		else {
-			spdlog::error("The {} sound has not been loaded yet.", name);
+			spdlog::error("The {} image has not been loaded yet.", name);
 			return false;
 		}
 	}
@@ -286,5 +285,25 @@ namespace lilengine {
 
 	int GraphicsManager::GetWindowHeight() {
 		return window_height;
+	}
+
+	int GraphicsManager::GetImageWidth(const string& name) {
+		if (name_to_image_map.count(name) != 0) {
+			return name_to_image_map[name].width;
+		}
+		else {
+			spdlog::error("The {} image has not been loaded yet.", name);
+			return -1;
+		}
+	}
+
+	int GraphicsManager::GetImageHeight(const string& name) {
+		if (name_to_image_map.count(name) != 0) {
+			return name_to_image_map[name].height;
+		}
+		else {
+			spdlog::error("The {} image has not been loaded yet.", name);
+			return -1;
+		}
 	}
 }
