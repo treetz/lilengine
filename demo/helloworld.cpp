@@ -1,7 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include <random>
 
+#include <iostream>
 #include "spdlog/spdlog.h"
 
 #include "Engine.h"
@@ -11,14 +12,17 @@
 #include "SoundManager.h"
 #include "ECS.h"
 #include "ScriptingManager.h"
+#include "TileMapManager.h"
 
 using namespace lilengine;
 
 void UpdateCallback(Engine& e) {
-
+	
 }
 
 int main(int argc, const char* argv[]) {
+	srand(time(0));
+
 	gEngine.Startup();
 
 	//GraphicsManager& graphics_manager = gEngine.GetGraphicsManager();
@@ -36,10 +40,19 @@ int main(int argc, const char* argv[]) {
 	// All scripts added to the ECS will run every frame.
 	ecs.Get<Script>(ecs.Create()).name = "farming_update";
 
+	// TILE MAP
+	std::vector<string> tile_set{ "grass_1", "grass_2", "grass_3", "grass_4" };
+	std::vector<int> world_map;
+	for (int i = 0; i < 180; i++) {
+		world_map.push_back(rand() % 4 + 1);
+	}
+
+	TileMapManager& tile_map_manager = gEngine.GetTileMapManager();
+	tile_map_manager.LoadTileMap(tile_set, 10, world_map, 18, 10);
+
 	gEngine.RunGameLoop(UpdateCallback);
 	gEngine.Shutdown();
 	
-
 	std::cout << "Hello, World!\n";
 	return 0;
 }

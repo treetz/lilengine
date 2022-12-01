@@ -13,6 +13,7 @@
 #include "SoundManager.h"
 #include "ECS.h"
 #include "ScriptingManager.h"
+#include "TileMapManager.h"
 
 namespace lilengine {
 
@@ -24,6 +25,7 @@ namespace lilengine {
 		SoundManager sound_manager;
 		ECS ecs;
 		ScriptingManager scripting_manager;
+		TileMapManager tile_map_manager;
 	};
 
 	Engine::Engine(int window_width, int window_height, bool fullscreen) {
@@ -41,10 +43,10 @@ namespace lilengine {
 	}
 
 	void Engine::Shutdown() {
+		impl_->scripting_manager.Shutdown();
 		impl_->sound_manager.Shutdown();
 		impl_->input_manager.Shutdown();
 		impl_->graphics_manager.Shutdown();
-		impl_->scripting_manager.Shutdown();
 	}
 
 	void Engine::RunGameLoop(const UpdateCallback& callback) {
@@ -111,5 +113,9 @@ namespace lilengine {
 
 	ScriptingManager& Engine::GetScriptingManager() {
 		return impl_->scripting_manager;
+	}
+
+	TileMapManager& Engine::GetTileMapManager() {
+		return impl_->tile_map_manager;
 	}
 }

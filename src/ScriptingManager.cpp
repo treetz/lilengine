@@ -172,6 +172,16 @@ namespace lilengine {
 			}
 		);
 
+		// Expose the tile map manager's ability to load a tile map
+		// to Lua.
+		/*
+		lua.set_function("LoadTileMap",
+			[&](sol::table tile_set, int tile_size, sol::table world_map, int cols, int rows) {
+				return gEngine.GetTileMapManager().LoadTileMap(tile_set, tile_size, world_map, cols, rows);
+			}
+		);
+		*/
+
 		// Expose the entity component system's functionality to
 		// Lua.
 		lua.set_function("CreateGameObject", 
@@ -299,6 +309,13 @@ namespace lilengine {
 				return gEngine.GetGraphicsManager().GetWindowHeight();
 			}
 		);
+
+		// Expose the floor function from math.h to users
+		lua.set_function("floor",
+			[&](double n) {
+				return floor(n);
+			}
+		);
 	}
 
 	void ScriptingManager::Shutdown() {
@@ -325,8 +342,6 @@ namespace lilengine {
 			ecs.Get<Script>(ecs.Create()).name = name;
 			*/
 		}
-
-		spdlog::info("Script loaded.");
 		return true;
 	}
 

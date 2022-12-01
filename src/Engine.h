@@ -17,6 +17,7 @@ namespace lilengine {
 	class SoundManager;
 	class ECS;
 	class ScriptingManager;
+	class TileMapManager;
 
 	class Engine {
 
@@ -36,6 +37,7 @@ namespace lilengine {
 		SoundManager& GetSoundManager();
 		ECS& GetECS();
 		ScriptingManager& GetScriptingManager();
+		TileMapManager& GetTileMapManager();
 
 	private:
 		class EngineImpl;
