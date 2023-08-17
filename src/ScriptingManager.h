@@ -18,7 +18,7 @@
 #include "TileMapManager.h"
 
 namespace lilengine {
-	
+	using namespace Types;
 
 	class ScriptingManager {
 	public:

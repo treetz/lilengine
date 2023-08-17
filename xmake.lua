@@ -3,14 +3,11 @@ add_requires("glfw")
 add_requires("spdlog")
 includes("external/xmake_soloud.lua")
 add_requires("soloud")
-includes("external/xmake_enet.lua")
-add_requires("enet")
-add_requires("ncurses")
 add_requires("sokol")
 add_requires("glm")
 add_requires("stb")
 add_requires("lua", "sol2")
-add_requires("ncurses")
+
 set_policy("build.warning", true) -- show warnings
 set_warnings("all") -- warn about many things
 
@@ -21,22 +18,6 @@ target("helloworld")
 	add_deps("lilengine")
     
     add_files("demo/helloworld.cpp")
-
-target("server")
-    set_kind("binary")
-    set_languages("cxx17")
-
-	add_deps("lilengine")
-
-    add_files("demo/server.cpp")
-
-target("client")
-    set_kind("binary")
-    set_languages("cxx17")
-
-	add_deps("lilengine")
-
-    add_files("demo/client.cpp")
 
 	-- Copy assets
     after_build(function (target)
@@ -58,10 +39,8 @@ target("lilengine")
 	add_packages("glfw", {public = true})
 	add_packages("spdlog", {public = true})
 	add_packages("soloud", {public = true})
-    add_packages("enet", {public = true})
 	add_packages("sokol", {public = true})
 	add_packages("glm", {public = true})
 	add_packages("stb", {public = true})
 	add_packages("lua")
 	add_packages("sol2", {public = true})
-    add_packages("ncurses", {public = true})

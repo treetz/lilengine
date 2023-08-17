@@ -2,7 +2,6 @@
 
 #include <string>
 
-#include <enet/enet.h>
 #include "sokol_gfx.h"
 #include "glm/glm.hpp"
 
@@ -21,5 +20,4 @@ namespace Types {
 	struct Sprite { string image_name; vec3 scale, rotation_axis; float rotation_angle, z; };
 	struct Health { real percent; };
 	struct Script { string name; };
-	struct Client { int id; ENetHost * client; };
 }
