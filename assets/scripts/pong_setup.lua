@@ -1,15 +1,15 @@
 -- Load in all assets
 LoadSound("bubbles", "bubbles.wav")
 LoadSound("score", "score.wav")
-LoadImage("spongebob", "spongebob.png")
+LoadImage("ball", "ball.png")
 LoadImage("paddle", "paddle.png")
 
 -- Create the ball game object and set up its components
 ball = CreateGameObject()
 
 ball_sprite = GetSprite(ball)
-ball_sprite.image_name = "spongebob"
-ball_sprite.scale = vec3.new(10.0, 10.0, 0.0)
+ball_sprite.image_name = "ball"
+ball_sprite.scale = vec3.new(4.0, 4.0, 0.0)
 ball_sprite.rotation_axis = vec3.new(0.0, 0.0, 0.0)
 ball_sprite.rotation_angle = 0
 ball_sprite.z = 0.0
@@ -22,8 +22,8 @@ ball_velocity = GetVelocity(ball)
 ball_velocity.x = 0.0
 ball_velocity.y = 0.0
 
-ball_hitbox_width = 15.0
-ball_hitbox_height = 13.0
+ball_hitbox_width = 8.0
+ball_hitbox_height = 8.0
 
 -- Create the player game objects and set up their components.
 -- Player 1
