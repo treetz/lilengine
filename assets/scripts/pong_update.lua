@@ -85,15 +85,15 @@ elseif (ball_hitbox_left < player_2_hitbox_right) and ( ( (ball_hitbox_top <= pl
 -- Collision between the ball and the right side of the screen.
 elseif (ball_position.x + (ball_hitbox_width / 2)) > (GetWindowWidth() / 4.5) then
 	ball_status = "ready"
-	player_2_score = player_2_score + 1
-	print("\nPlayer 2 scored!\nThe score is now " .. player_2_score .. " to " .. player_1_score)
+	player_1_score = player_1_score + 1
+	print("\nPlayer 1 scored!\nThe score is now " .. player_1_score .. " to " .. player_2_score)
 	PlaySound("score")
 
 -- Collision between the ball and the left side of the screen.
 elseif (ball_position.x - (ball_hitbox_width / 2)) < ((GetWindowWidth() / 4.5) * -1) then
 	ball_status = "ready"
-	player_1_score = player_1_score + 1
-	print("\nPlayer 1 scored!\nThe score is now " .. player_2_score .. " to " .. player_1_score)
+	player_2_score = player_2_score + 1
+	print("\nPlayer 2 scored!\nThe score is now " .. player_1_score .. " to " .. player_2_score)
 	PlaySound("bubbles")
 
 -- Collision between the ball and the top and bottom sides of the 

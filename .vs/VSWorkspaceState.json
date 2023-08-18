@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\assets",
+    "\\assets\\scripts",
     "\\demo"
   ],
-  "SelectedNode": "\\demo",
+  "SelectedNode": "\\assets\\scripts\\pong_update.lua",
   "PreviewInSolutionExplorer": false
 }
