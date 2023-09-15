@@ -11,6 +11,7 @@ add_requires("lua", "sol2")
 set_policy("build.warning", true) -- show warnings
 set_warnings("all") -- warn about many things
 
+-- Testing Build
 target("helloworld")
     set_kind("binary")
     set_languages("cxx17")
@@ -25,6 +26,7 @@ target("helloworld")
         os.cp("$(projectdir)/assets", path.directory(target:targetfile()))
     end)
 
+-- Pong Game Build
 target("pong")
     set_kind("binary")
     set_languages("cxx17")
@@ -39,6 +41,7 @@ target("pong")
         os.cp("$(projectdir)/assets", path.directory(target:targetfile()))
     end)
 
+-- Farming Game Build
 target("farming")
     set_kind("binary")
     set_languages("cxx17")
@@ -53,6 +56,7 @@ target("farming")
         os.cp("$(projectdir)/assets", path.directory(target:targetfile()))
     end)
 
+-- The Engine's Library
 target("lilengine")
     set_kind("static")
     set_languages("cxx17")

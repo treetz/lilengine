@@ -17,7 +17,7 @@
 using namespace lilengine;
 
 void UpdateCallback(Engine& e) {
-	/*
+	/* Testing
 	TileMapManager& tile_map_manager = gEngine.GetTileMapManager();
 	spdlog::info(tile_map_manager.GetTile(168, 90));
 	*/
@@ -43,6 +43,8 @@ int main(int argc, const char* argv[]) {
 	// TILE MAP
 	std::vector<string> tile_set{ "grass_1", "grass_2", "grass_3", "grass_4" };
 	std::vector<int> world_map;
+
+	// Randomly generate the world_map
 	for (int i = 0; i < 180; i++) {
 		world_map.push_back(rand() % 4 + 1);
 	}
@@ -53,6 +55,5 @@ int main(int argc, const char* argv[]) {
 	gEngine.RunGameLoop(UpdateCallback);
 	gEngine.Shutdown();
 
-	std::cout << "Hello, World!\n";
 	return 0;
 }

@@ -1,10 +1,13 @@
 ﻿#pragma once
 
+// Window API
 #define GLFW_INCLUDE_NONE
 
+// Graphics Pipeline API
 #define SOKOL_IMPL
 #define SOKOL_GLCORE33
 
+// Image Loader API
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "GraphicsManager.h"
@@ -25,15 +28,19 @@ namespace {
 
 namespace lilengine {
 
+	// Constructor sets the window dimensions 
 	GraphicsManager::GraphicsManager(int window_width, int window_height, bool window_fullscreen) {
 		this->window_width = window_width;
 		this->window_height = window_height;
 		this->window_fullscreen = window_fullscreen;
 	}
-
 	GraphicsManager::~GraphicsManager() {}
 
+	// Startup function sets up the GLFW window and the graphics pipeline
 	void GraphicsManager::Startup() {
+	// **********************************************************************************************************************************************************
+	// PROVIDED BY PROFESSOR
+	
 	// Setup the window:
 		glfwInit(); // Initialize the window
 		// We'll use sokol_gfx's OpenGL backend
@@ -138,14 +145,21 @@ namespace lilengine {
 	// Define the bindings
 		// Bind our vertex buffer data to our pipeline
 		bindings.vertex_buffers[0] = vertex_buffer;
+
+	// **********************************************************************************************************************************************************
 	}
 
+	// Shuts down the graphics pipeline and closes the window
 	void GraphicsManager::Shutdown() {
 		sg_shutdown(); // Shutdown sokol_gfx
 		glfwTerminate(); // Close the window
 	}
 
+	// Draw loaded images to the window
 	void GraphicsManager::Draw() {
+	// **********************************************************************************************************************************************************
+	// PROVIDED BY PROFESSOR
+
 	// Get the current frame buffer size
 		glfwGetFramebufferSize(window, &window_width, &window_height);
 
@@ -173,6 +187,8 @@ namespace lilengine {
 	// Apply the pipeline
 		sg_apply_pipeline(pipeline);
 
+	// **********************************************************************************************************************************************************
+
 	// Draw each sprite:
 		ECS& ecs = gEngine.GetECS();
 
@@ -188,6 +204,9 @@ namespace lilengine {
 			// Get the sprite's loaded image
 			Image image = name_to_image_map[sprite.image_name];
 
+	// **********************************************************************************************************************************************************
+	// PROVIDED BY PROFESSOR
+	
 			// Fill out the uniform's transform field:
 				// Figure out where to add rotate function:
 				//		rotate(mat4{}, radians(sprite.rotation_angle), sprite.rotation_axis)
@@ -215,8 +234,11 @@ namespace lilengine {
 		sg_end_pass();
 		sg_commit();
 		glfwSwapBuffers(window);
+
+	// **********************************************************************************************************************************************************
 	}
 
+	// Returns True if the 'X' button had been clicked on the window
 	bool GraphicsManager::ShouldQuit() {
 		if (glfwWindowShouldClose(window) == 1) {
 			return true;
@@ -224,16 +246,24 @@ namespace lilengine {
 		return false;
 	}
 
+	// Sets the GLFW window to close
 	void GraphicsManager::SetShouldQuit() {
 		glfwSetWindowShouldClose(window, true);
 	}
 
+	// Loads an image into the name_to_image_map
 	bool GraphicsManager::LoadImage(const string& name, const string& p) {
-		spdlog::info("Loading Image: {}", p);
+		spdlog::info("Loading Image: {}", p); // Inform the user that their image is being loaded
 		
+		// Only load images that haven't already been loaded
 		if (name_to_image_map.count(name) == 0) {
+
+			// Set the Resource Manager's root path to the sprites subdirectory and resolve the path to the image 
 			gEngine.GetResourceManager().SetRootPath("assets//sprites");
 			path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
+
+	// **********************************************************************************************************************************************************
+	// PROVIDED BY PROFESSOR
 
 			// Load the image and save its dimensions and channels
 			int width, height, channels;
@@ -254,6 +284,8 @@ namespace lilengine {
 			// Upload the image to the GPU
 			sg_image image = sg_make_image(image_desc);
 
+	// **********************************************************************************************************************************************************
+
 			// Create an Image struct and add it to the name
 			Image i;
 			i.image = image;
@@ -268,39 +300,50 @@ namespace lilengine {
 		return true;
 	}
 
+	// Removes an image from the name_to_image_map
 	bool GraphicsManager::DestroyImage(const string& name) {
+		// If the image has been loaded previously then remove it
 		if (name_to_image_map.count(name) != 0) {
 			name_to_image_map.erase(name);
 			return true;
 		}
+		// Otherwise log an error
 		else {
 			spdlog::error("The {} image has not been loaded yet.", name);
 			return false;
 		}
 	}
 
+	// Returns the width of the GLFW window
 	int GraphicsManager::GetWindowWidth() {
 		return window_width;
 	}
 
+	// Returns the height of the GLFW window
 	int GraphicsManager::GetWindowHeight() {
 		return window_height;
 	}
 
+	// Returns the width of a loaded image
 	int GraphicsManager::GetImageWidth(const string& name) {
+		// If the image has been loaded then return the width
 		if (name_to_image_map.count(name) != 0) {
 			return name_to_image_map[name].width;
 		}
+		// Otherwise log an error
 		else {
 			spdlog::error("The {} image has not been loaded yet.", name);
 			return -1;
 		}
 	}
 
+	// Returns the height of a loaded image
 	int GraphicsManager::GetImageHeight(const string& name) {
+		// If the image has been loaded then return the height
 		if (name_to_image_map.count(name) != 0) {
 			return name_to_image_map[name].height;
 		}
+		// Otherwise log an error
 		else {
 			spdlog::error("The {} image has not been loaded yet.", name);
 			return -1;

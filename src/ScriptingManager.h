@@ -20,15 +20,24 @@
 namespace lilengine {
 	using namespace Types;
 
+	// The Scripting Manager class is in charge of loading and running Lua scripts written by users
 	class ScriptingManager {
 	public:
+		// Constructor/Destructor
 		ScriptingManager();
 		~ScriptingManager();
 
+		// Startup and Shutdown functions
 		void Startup();
 		void Shutdown();
+
+		// Runs each of the scripts loaded into the Entity Component System
 		void Update();
+
+		// Loads a script into the name_to_script_map
 		bool LoadScript(const string& name, const string& path);
+
+		// Runs a loaded script
 		bool RunScript(const string& name);
 
 	private:

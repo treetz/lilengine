@@ -7,22 +7,23 @@ namespace lilengine {
 	ScriptingManager::ScriptingManager() {}
 	ScriptingManager::~ScriptingManager() {}
 
+	// Startup loads Sol libraries and exposes Lua to a variety of functions for users to use in their scripts
 	void ScriptingManager::Startup() {
 
+		// Load convenient built-in libraries 
 		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table);
 		
 		// Make the math random seed always the same for debugging.
 		//lua.script("math.randomseed(0)");
 
-		// Expose the input managers functionality to Lua.
+		// Expose the input managers functionality to Lua - allows users to use the KeyIsDown function in their Lua scripts
 		lua.set_function("KeyIsDown", 
 			[&](const int keycode) { 
 				return gEngine.GetInputManager().KeyIsPressed(keycode); 
 			} 
 		);
 
-		// Create a Lua enum for the keyboard keys. This will allow
-		// Lua scripts to call:
+		// Create a Lua enum for the keyboard keys - this will allow Lua scripts to call:
 		//     KeyIsDown( KEYBOARD.SPACE )
 		lua.new_enum("KEYBOARD",
 			"SPACE", GLFW_KEY_SPACE,
@@ -143,36 +144,35 @@ namespace lilengine {
 			"LAST", GLFW_KEY_LAST
 		);
 
-		// Expose a function to quit/close the window to Lua.
+		// Expose a function to quit/close the window to Lua
 		lua.set_function("Quit",
 			[&]() {
 				return gEngine.GetGraphicsManager().SetShouldQuit();
 			}
 		);
 
-		// Expose the sound manager's ability to play sounds to 
-		// Lua.
+		// Expose the sound manager's ability to load sounds to Lua
 		lua.set_function("LoadSound", 
 			[&](const string& name, const string& path) { 
 				return gEngine.GetSoundManager().LoadSound(name, path); 
 			} 
 		);
 
+		// Expose the sound manager's ability to play sounds to Lua
 		lua.set_function("PlaySound", 
 			[&](const string& name) { 
 				return gEngine.GetSoundManager().PlaySound(name); 
 			} 
 		);
 
-		// Expose the graphics manager's ability to load sprites to
-		// Lua.
+		// Expose the graphics manager's ability to load sprites to Lua
 		lua.set_function("LoadImage",
 			[&](const string& name, const string& path) {
 				return gEngine.GetGraphicsManager().LoadImage(name, path);
 			}
 		);
 
-		// Expose the tile map manager to Lua.
+		// Expose the tile map manager to Lua
 		/*
 		lua.set_function("LoadTileMap",
 			[&](sol::table tile_set, int tile_size, sol::table world_map, int cols, int rows) {
@@ -180,15 +180,16 @@ namespace lilengine {
 			}
 		);
 		*/
+
+		// Expose the tile map manager's ability to get tiles at inputted coordinates to Lua
 		lua.set_function("GetTile",
 			[&](int x, int y) {
-				spdlog::info("Hello from the Lua function");
+				spdlog::info("Hello from the Lua function"); // Testing
 				return gEngine.GetTileMapManager().GetTile(x, y);
 			}
 		);
 
-		// Expose the entity component system's functionality to
-		// Lua.
+		// Expose the entity component system's functionality to Lua
 		lua.set_function("CreateGameObject", 
 			[&]() { 
 				return gEngine.GetECS().Create(); 
@@ -237,9 +238,7 @@ namespace lilengine {
 			}
 		);
 
-		// Since sol does not pass primitive Lua types (e.g. 
-		// integer, float, string) we will have to resgister our 
-		// game component structs with sol.
+		// Since sol does not pass primitive Lua types (e.g. integer, float, string) we will have to resgister our game component structs with sol
 		lua.new_usertype<Position>("Position",
 			sol::constructors<Position()>(),
 			"x", &Position::x,
@@ -276,6 +275,9 @@ namespace lilengine {
 			"name", &Script::name
 		);
 
+	// **********************************************************************************************************************************************************
+	// PROVIDED BY PROFESSOR
+	
 		// Expose vec2 and vec3 to Lua.
 		lua.new_usertype<glm::vec3>("vec3",
 			sol::constructors<glm::vec3(), glm::vec3(float), glm::vec3(float, float, float)>(),
@@ -292,9 +294,9 @@ namespace lilengine {
 			)
 		);
 
-		// Expose sol::state lua to users so they can call 
-		// lua.new_usertype() for their own structs and 
-		// lua.set_function() to expose their own functions.
+	// **********************************************************************************************************************************************************
+
+		// Expose sol::state lua to users so they can call lua.new_usertype() for their own structs and lua.set_function() to expose their own functions
 		lua.set_function("lua",
 			[&]() {
 				return &lua;
@@ -323,10 +325,10 @@ namespace lilengine {
 		);
 	}
 
-	void ScriptingManager::Shutdown() {
-		
-	}
+	// Shutdown the Scripting Manager
+	void ScriptingManager::Shutdown() {}
 
+	// Runs each of the scripts loaded into the Entity Component System
 	void ScriptingManager::Update() {
 		ECS& ecs = gEngine.GetECS();
 
@@ -335,14 +337,16 @@ namespace lilengine {
 		} );
 	}
 
+	// Loads a script into the name_to_script_map
 	bool ScriptingManager::LoadScript(const string& name, const string& p) {
-		spdlog::info("Loading script: {}", p);
+		spdlog::info("Loading script: {}", p); // Notify the user that their script is being loaded
 		
+		// If the script has not yet been loaded then resolve the path to the file within the scripts subdirectory and load the file
 		if (name_to_script_map.count(name) == 0) {
 			gEngine.GetResourceManager().SetRootPath("assets//scripts");
 			path resolved_path = gEngine.GetResourceManager().ResolvePath(p);
 			name_to_script_map[name] = lua.load_file(resolved_path.string().c_str());
-			/*
+			/* 
 			ECS& ecs = gEngine.GetECS();
 			ecs.Get<Script>(ecs.Create()).name = name;
 			*/
@@ -350,9 +354,11 @@ namespace lilengine {
 		return true;
 	}
 
+	// Runs a loaded script
 	bool ScriptingManager::RunScript(const string& name) {
+		// If the script has been loaded then run the scripts
 		if (name_to_script_map.count(name) != 0) {
-			spdlog::info("Running script: {}.lua", name);
+			spdlog::info("Running script: {}.lua", name); // Notify the user of which script is being ran
 			name_to_script_map[name]();
 			return true;
 		}

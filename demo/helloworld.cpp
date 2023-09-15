@@ -16,14 +16,19 @@
 
 using namespace lilengine;
 
+// Callback function will run each iteration of the game loop
 void UpdateCallback(Engine& e) {
 	
 }
 
 int main(int argc, const char* argv[]) {
+	// Start the engine
 	gEngine.Startup();
 
+	// Start the game loop
 	gEngine.RunGameLoop(UpdateCallback);
+	
+	// Shutdown the engine
 	gEngine.Shutdown();
 	
 	std::cout << "Hello, World!\n";

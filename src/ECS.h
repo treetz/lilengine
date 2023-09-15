@@ -13,9 +13,7 @@ namespace lilengine {
 	// A unique 32 bit ID given to each game object.
 	typedef uint32_t EntityID;
 
-	// The Entity Component System takes care of creating, storing, 
-	// accessing destroying, and itterating over game objects and their 
-	// various components. 
+	// The Entity Component System takes care of creating, storing, accessing, destroying, and itterating over game objects and their various components. 
 	class ECS {
 	public:
 		// Returns the entity id of the created game object
@@ -33,7 +31,9 @@ namespace lilengine {
 		T& Get(EntityID entity) {
 			return GetAppropriateSparseSet<T>()[entity];
 		}
-
+	
+	// **********************************************************************************************************************************************************
+	// PROVIDED BY PROFESSOR
 		typedef std::function<void(EntityID)> ForEachCallback;
 		template<typename EntitiesThatHaveThisComponent, typename... AndAlsoTheseComponents>
 		void ForEach(const ForEachCallback& callback) {
@@ -54,6 +54,7 @@ namespace lilengine {
 		}
 
 	private:
+
 		// Holds an unordered map of a component type T mapped to EntityIDs.
 		class SparseSetHolder {
 		public:
@@ -108,7 +109,8 @@ namespace lilengine {
 			if constexpr (sizeof...(Rest) > 0) { result = HasAll<Rest...>(entity); }
 			return result && GetAppropriateSparseSet<T>().count(entity) > 0;
 		}
-
+// **********************************************************************************************************************************************************
+			
 		// m_components stores SparseSetHolders for every component in use
 		std::vector< std::unique_ptr< SparseSetHolder > > m_components;
 

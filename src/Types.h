@@ -5,6 +5,7 @@
 #include "sokol_gfx.h"
 #include "glm/glm.hpp"
 
+// The Types namespace declares common types used throughout the engine
 namespace Types {
 	typedef double real;
 	typedef std::string string;

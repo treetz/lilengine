@@ -3,8 +3,10 @@
     "",
     "\\assets",
     "\\assets\\scripts",
-    "\\demo"
+    "\\demo",
+    "\\external",
+    "\\src"
   ],
-  "SelectedNode": "\\assets\\scripts\\pong_update.lua",
+  "SelectedNode": "\\src\\ECS.h",
   "PreviewInSolutionExplorer": false
 }
